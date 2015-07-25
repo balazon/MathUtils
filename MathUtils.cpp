@@ -1,5 +1,9 @@
 #include "MathUtils.h"
 
+#include <cmath>
+#include <utility>
+#define EPS (0.001)
+
 //intersection point of two lines : Ax + By = C, Dx + Ey = F
 //returns false if parallel
 bool IntersectLines(float A, float B, float C, float D, float E, float F, float& resX, float& resY)
@@ -52,7 +56,7 @@ bool IntersectLineCircle(float A, float B, float C, float u, float v, float r, f
 	}
 	float a = A * A + B * B;
 	float b = - 2.f * C * A - 2.f * u * B * B + 2.f * v * A * B;
-	float c = C * C - 2.f * v * C * B - r * r * B * B;
+	float c = C * C - 2.f * v * C * B + (u * u + v * v - r * r) * B * B;
 	bool solvable = QuadraticEquation(a, b, c, x1, x2);
 	if(!solvable)
 	{
@@ -70,5 +74,5 @@ bool IntersectLineCircle(float A, float B, float C, float u, float v, float r, f
 
 bool IntersectCircleCircle(float u1, float v1, float r1, float u2, float v2, float r2, float& x1, float& y1, float& x2, float& y2)
 {
-	return IntersectLineCircle(u1 - u2, v1 - v2, (r2 + r1) * (r2 - r1), u1, v1, r1, x1, y1, x2, y2);
+	return IntersectLineCircle(u1 - u2, v1 - v2, .5f * ((r2 + r1) * (r2 - r1) + (u1 + u2) * (u1 - u2) + (v1 + v2) * (v1 - v2)), u1, v1, r1, x1, y1, x2, y2);
 }

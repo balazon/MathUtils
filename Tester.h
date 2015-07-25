@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MathUtils.h"
+#include <vector>
 
 bool IntersectLines(float A, float B, float C, float D, float E, float F, float& resX, float& resY);
 
@@ -12,7 +13,11 @@ bool IntersectLineCircle(float A, float B, float C, float u, float v, float r, f
 
 bool IntersectCircleCircle(float u1, float v1, float r1, float u2, float v2, float r2, float& x1, float& y1, float& x2, float& y2);
 
-enum TestType {ILines, ProjectionPointLine, QuadEquation, ILineCircle, ICircleCircle};
+enum TestType {TT_ILines, TT_ProjectionPointLine, TT_QuadEquation, TT_ILineCircle, TT_ICircleCircle};
+
+enum ResultType {RT_OnePoint, RT_TwoPoints, RT_TwoX};
+
+ResultType GetResultType(TestType testType);
 
 struct Test
 {
@@ -29,8 +34,13 @@ struct Test
 	//test's solution
 	bool feasible;
 	float x1, y1, x2, y2;
+	
 	Test(TestType type);
 	
+	void SetLine(float A, float B, float C, int index);
+	void SetCircle(float u, float v, float r, int index);
+	void SetPoint(float px, float py);
+	void SetQuadraticParams(float A, float B, float C, int index);
 };
 
 class Tester
