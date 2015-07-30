@@ -76,3 +76,12 @@ bool IntersectCircleCircle(float u1, float v1, float r1, float u2, float v2, flo
 {
 	return IntersectLineCircle(u1 - u2, v1 - v2, .5f * ((r2 + r1) * (r2 - r1) + (u1 + u2) * (u1 - u2) + (v1 + v2) * (v1 - v2)), u1, v1, r1, x1, y1, x2, y2);
 }
+
+void OrthogonalProjectionOfPointOnCircle(float u, float v, float r, float tx, float ty, float& resX, float& resY)
+{
+	float OTx = tx - u;
+	float OTy = ty - v;
+	float k = r / sqrtf(OTx * OTx + OTy * OTy);
+	resX = u + OTx * k;
+	resY = v + OTy * k;
+}
