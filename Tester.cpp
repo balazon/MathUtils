@@ -18,6 +18,8 @@ ResultType GetResultType(TestType testType)
 		return RT_TwoX;
 		case TT_ILineCircle:
 		return RT_TwoPoints;
+		case TT_ProjectionPointCircle:
+		return RT_OnePoint;
 		default :
 		return RT_TwoPoints;
 	}
@@ -141,6 +143,14 @@ void Tester::InitTests()
 	t8.feasible = false;
 	AddTest(t8);
 	
+	
+	Test t9{TT_ProjectionPointCircle};
+	t9.SetCircle(3.f, 2.f, sqrtf(2.f), 0);
+	t9.SetPoint(7.f, -2.f);
+	t9.feasible = true;
+	t9.x1 = 4.f;
+	t9.y1 = 1.f;
+	AddTest(t9);
 }
 
 void Tester::AddTest(Test t)
@@ -181,6 +191,11 @@ void Tester::RunTests()
 		else if(t.type == TT_ICircleCircle)
 		{
 			feasible = IntersectCircleCircle(t.u1, t.v1, t.r1, t.u2, t.v2, t.r2, x1, y1, x2, y2);
+		}
+		else if(t.type == TT_ProjectionPointCircle)
+		{
+			feasible = true;
+			OrthogonalProjectionOfPointOnCircle(t.u1, t.v1, t.r1, t.px, t.py, x1, y1);
 		}
 		
 		ResultType resultType = GetResultType(t.type);

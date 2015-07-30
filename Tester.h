@@ -2,7 +2,7 @@
 
 #include "MathUtils.h"
 #include <vector>
-
+/*
 bool IntersectLines(float A, float B, float C, float D, float E, float F, float& resX, float& resY);
 
 void OrthogonalProjectionOfPointOnLine(float A, float B, float C, float tx, float ty, float& resX, float& resY);
@@ -13,7 +13,9 @@ bool IntersectLineCircle(float A, float B, float C, float u, float v, float r, f
 
 bool IntersectCircleCircle(float u1, float v1, float r1, float u2, float v2, float r2, float& x1, float& y1, float& x2, float& y2);
 
-enum TestType {TT_ILines, TT_ProjectionPointLine, TT_QuadEquation, TT_ILineCircle, TT_ICircleCircle};
+void OrthogonalProjectionOfPointOnCircle(float u, float v, float r, float tx, float ty, float& resX, float& resY);
+*/
+enum TestType {TT_ILines, TT_ProjectionPointLine, TT_QuadEquation, TT_ILineCircle, TT_ICircleCircle, TT_ProjectionPointCircle};
 
 enum ResultType {RT_OnePoint, RT_TwoPoints, RT_TwoX};
 
