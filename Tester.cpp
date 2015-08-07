@@ -156,7 +156,34 @@ void Tester::InitTests()
 	t9.y1 = 1.f;
 	AddTest(t9);
 	
-	//TODO make anglebisector tests
+	
+	Test t10{TT_AngleBisector};
+	t10.SetLine(1.f, 0.f, 0.f, 0);
+	t10.SetLine(0.f, 1.f, 0.f, 1);
+	t10.feasible = true;
+	t10.G = -1.f;
+	t10.H = 1.f;
+	t10.I = 0.f;
+	AddTest(t10);
+	
+	Test t11{TT_AngleBisector};
+	
+	t11.SetLine(-.5f, 1.f, 0.f, 0);
+	t11.SetLine(-.5f, -1.f, 0.f, 1);
+	t11.feasible = true;
+	t11.G = 0.f;
+	t11.H = 1.f;
+	t11.I = 0.f;
+	AddTest(t11);
+	
+	Test t12{TT_AngleBisector};
+	t12.SetLine(-2.f , 1.f, -10.f, 0);
+	t12.SetLine(2.f, -1.f, 2.f, 1);
+	t12.feasible = true;
+	t12.G = -2.f;
+	t12.H = 1.f;
+	t12.I = -6.f;
+	AddTest(t12);
 }
 
 void Tester::AddTest(Test t)
@@ -207,7 +234,9 @@ void Tester::RunTests()
 		else if(t.type == TT_AngleBisector)
 		{
 			feasible = true;
-			AngleBisector(t.A, t.B, t.C, t.D, t.E, t.F, G, H, I);
+			float l1rec = 1.f / sqrtf(t.A * t.A + t.B * t.B);
+			float l2rec = 1.f / sqrtf(t.D * t.D + t.E * t.E);
+			AngleBisector(t.A * l1rec, t.B * l1rec, t.C * l1rec, t.D * l2rec, t.E * l2rec, t.F * l2rec, G, H, I);
 		}
 		
 		ResultType resultType = GetResultType(t.type);
@@ -283,7 +312,7 @@ void Tester::RunTests()
 				
 			std::cout << "Lib result: " << (feasible ? str_feasible : str_not_feasible);
 			if(feasible)
-				std::cout << ", solution: "<< G << " * x + " << H << " * y = " << I << "\n";
+				std::cout << ", solution: "<< G << " * x + " << H << " * y = " << I << "\n\n";
 			else
 				std::cout << "\n\n";
 			//normalizing
