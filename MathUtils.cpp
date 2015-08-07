@@ -4,8 +4,7 @@
 #include <utility>
 #define EPS (0.001)
 
-//intersection point of two lines : Ax + By = C, Dx + Ey = F
-//returns false if parallel
+
 bool IntersectLines(float A, float B, float C, float D, float E, float F, float& resX, float& resY)
 {
 	float denominator = D * B - E * A;
@@ -17,8 +16,7 @@ bool IntersectLines(float A, float B, float C, float D, float E, float F, float&
 }
 
 
-//line: Ax + By = C
-//point: (tx, ty)
+
 void OrthogonalProjectionOfPointOnLine(float A, float B, float C, float tx, float ty, float& resX, float& resY)
 {
 	float denominator = A * A + B * B;
@@ -84,4 +82,15 @@ void OrthogonalProjectionOfPointOnCircle(float u, float v, float r, float tx, fl
 	float k = r / sqrtf(OTx * OTx + OTy * OTy);
 	resX = u + OTx * k;
 	resY = v + OTy * k;
+}
+
+// (A,B) and (D,E) must be normalized
+void AngleBisector(float A, float B, float C, float D, float E, float F, float& G, float& H, float& I)
+{
+	G = A - D;
+	H = B - E;
+	float x1, y1, x2, y2;
+	IntersectLines(A, B, C, -H, G, 0, x1, y1);
+	IntersectLines(D, E, F, -H, G, 0, x2, y2);
+	I = G * (x1 + x2) * .5f + H * (y1 + y2) * .5f;
 }

@@ -18,10 +18,14 @@ ResultType GetResultType(TestType testType)
 		return RT_TwoX;
 		case TT_ILineCircle:
 		return RT_TwoPoints;
+		case TT_ICircleCircle:
+		return RT_TwoPoints;
 		case TT_ProjectionPointCircle:
 		return RT_OnePoint;
+		case TT_AngleBisector:
+		return RT_Line;
 		default :
-		return RT_TwoPoints;
+		throw "Test type's result not defined";
 	}
 }
 
@@ -151,6 +155,8 @@ void Tester::InitTests()
 	t9.x1 = 4.f;
 	t9.y1 = 1.f;
 	AddTest(t9);
+	
+	//TODO make anglebisector tests
 }
 
 void Tester::AddTest(Test t)
@@ -169,6 +175,7 @@ void Tester::RunTests()
 		testIndex++;
 		float x1, y1, x2, y2;
 		x1 = y1 = x2 = y2 = 0;
+		float G, H, I;
 		bool feasible;
 		
 		if(t.type == TT_ILines)
@@ -196,6 +203,11 @@ void Tester::RunTests()
 		{
 			feasible = true;
 			OrthogonalProjectionOfPointOnCircle(t.u1, t.v1, t.r1, t.px, t.py, x1, y1);
+		}
+		else if(t.type == TT_AngleBisector)
+		{
+			feasible = true;
+			AngleBisector(t.A, t.B, t.C, t.D, t.E, t.F, G, H, I);
 		}
 		
 		ResultType resultType = GetResultType(t.type);
@@ -260,6 +272,37 @@ void Tester::RunTests()
 			{
 				numbersMatch = fabs(x1 - t.x2) < EPS && fabs(x2 - t.x1) < EPS;
 			}
+		}
+		else if(resultType == RT_Line)
+		{
+			std::cout << "Test " << testIndex << ": " << (t.feasible ? str_feasible : str_not_feasible);
+			if(t.feasible)
+				std::cout << ", solution: "<< t.G << " * x + " << t.H << " * y = " << t.I << "\n";
+			else
+				std::cout << "\n";
+				
+			std::cout << "Lib result: " << (feasible ? str_feasible : str_not_feasible);
+			if(feasible)
+				std::cout << ", solution: "<< G << " * x + " << H << " * y = " << I << "\n";
+			else
+				std::cout << "\n\n";
+			//normalizing
+			float l1rec = 1.f / sqrtf(G * G + H * H);
+			float l2rec = 1.f / sqrtf(t.G * t.G + t.H * t.H);
+			G *= l1rec;
+			H *= l1rec;
+			I *= l1rec;
+			t.G *= l2rec;
+			t.H *= l2rec;
+			t.I *= l2rec;
+			if (G * t.G < 0)
+			{
+				G *= -1.f;
+				H *= -1.f;
+				I *= -1.f;
+			}
+			
+			numbersMatch = fabs(G - t.G) < EPS && fabs(H - t.H) < EPS && fabs(I - t.I) < EPS ;
 		}
 			
 		if(!t.feasible && !feasible)

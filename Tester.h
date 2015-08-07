@@ -14,10 +14,12 @@ bool IntersectLineCircle(float A, float B, float C, float u, float v, float r, f
 bool IntersectCircleCircle(float u1, float v1, float r1, float u2, float v2, float r2, float& x1, float& y1, float& x2, float& y2);
 
 void OrthogonalProjectionOfPointOnCircle(float u, float v, float r, float tx, float ty, float& resX, float& resY);
-*/
-enum TestType {TT_ILines, TT_ProjectionPointLine, TT_QuadEquation, TT_ILineCircle, TT_ICircleCircle, TT_ProjectionPointCircle};
 
-enum ResultType {RT_OnePoint, RT_TwoPoints, RT_TwoX};
+void AngleBisector(float A, float B, float C, float D, float E, float F, float& G, float& H, float& I);
+*/
+enum TestType {TT_ILines, TT_ProjectionPointLine, TT_QuadEquation, TT_ILineCircle, TT_ICircleCircle, TT_ProjectionPointCircle, TT_AngleBisector};
+
+enum ResultType {RT_OnePoint, RT_TwoPoints, RT_TwoX, RT_Line};
 
 ResultType GetResultType(TestType testType);
 
@@ -36,6 +38,7 @@ struct Test
 	//test's solution
 	bool feasible;
 	float x1, y1, x2, y2;
+	float G, H, I;
 	
 	Test(TestType type);
 	
