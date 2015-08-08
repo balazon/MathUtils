@@ -89,8 +89,5 @@ void AngleBisector(float A, float B, float C, float D, float E, float F, float& 
 {
 	G = A - D;
 	H = B - E;
-	float x1, y1, x2, y2;
-	IntersectLines(A, B, C, -H, G, 0, x1, y1);
-	IntersectLines(D, E, F, -H, G, 0, x2, y2);
-	I = G * (x1 + x2) * .5f + H * (y1 + y2) * .5f;
+	I = C - F;
 }
