@@ -207,36 +207,35 @@ void Tester::RunTests()
 		
 		if(t.type == TT_ILines)
 		{
-			feasible = IntersectLines(t.A, t.B, t.C, t.D, t.E, t.F, x1, y1);
+			feasible = BMU::IntersectLines(t.A, t.B, t.C, t.D, t.E, t.F, x1, y1);
 		}
 		else if(t.type == TT_ProjectionPointLine)
 		{
 			feasible = true;
-			OrthogonalProjectionOfPointOnLine(t.A, t.B, t.C, t.px, t.py, x1, y1);
+			BMU::OrthogonalProjectionOfPointOnLine(t.A, t.B, t.C, t.px, t.py, x1, y1);
 		}
 		else if(t.type == TT_QuadEquation)
 		{
-			feasible = QuadraticEquation(t.A, t.B, t.C, x1, x2);
+			feasible = BMU::QuadraticEquation(t.A, t.B, t.C, x1, x2);
 		}
 		else if(t.type == TT_ILineCircle)
 		{
-			feasible = IntersectLineCircle(t.A, t.B, t.C, t.u1, t.v1, t.r1, x1, y1, x2, y2);
+			feasible = BMU::IntersectLineCircle(t.A, t.B, t.C, t.u1, t.v1, t.r1, x1, y1, x2, y2);
 		}
 		else if(t.type == TT_ICircleCircle)
 		{
-			feasible = IntersectCircleCircle(t.u1, t.v1, t.r1, t.u2, t.v2, t.r2, x1, y1, x2, y2);
+			feasible = BMU::IntersectCircleCircle(t.u1, t.v1, t.r1, t.u2, t.v2, t.r2, x1, y1, x2, y2);
 		}
 		else if(t.type == TT_ProjectionPointCircle)
 		{
-			feasible = true;
-			OrthogonalProjectionOfPointOnCircle(t.u1, t.v1, t.r1, t.px, t.py, x1, y1);
+			feasible = BMU::OrthogonalProjectionOfPointOnCircle(t.u1, t.v1, t.r1, t.px, t.py, x1, y1);
 		}
 		else if(t.type == TT_AngleBisector)
 		{
 			feasible = true;
 			float l1rec = 1.f / sqrtf(t.A * t.A + t.B * t.B);
 			float l2rec = 1.f / sqrtf(t.D * t.D + t.E * t.E);
-			AngleBisector(t.A * l1rec, t.B * l1rec, t.C * l1rec, t.D * l2rec, t.E * l2rec, t.F * l2rec, G, H, I);
+			BMU::AngleBisector(t.A * l1rec, t.B * l1rec, t.C * l1rec, t.D * l2rec, t.E * l2rec, t.F * l2rec, G, H, I);
 		}
 		
 		ResultType resultType = GetResultType(t.type);
