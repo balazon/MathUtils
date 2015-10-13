@@ -3,13 +3,25 @@
 #pragma once
 
 class LogRVOTest;
-class Warning;
+//class VeryVerbose;
+//class Warning;
+
+
+
+#define VeryVerbose (4)
+#define Warning (5)
+#define LogLevel (5)
 #define TEXT(x) x
-#define UE_LOG(x, y, ...) printf(__VA_ARGS__)
+#define UE_LOG(x, y, ...) if(y >= LogLevel) printf(__VA_ARGS__)
+
+
 
 #include <cstdio>
 #include <cmath>
 #include <utility>
+
+
+
 
 //bmu for bala math utils
 namespace BMU
@@ -59,7 +71,7 @@ namespace BMU
 	{
 		if (debug)
 			UE_LOG(LogRVOTest, Warning, TEXT("il params: %f %f %f %f %f %f"), A, B, C, D, E, F);
-
+		
 		float denominator = D * B - E * A;
 		if (fabs(denominator) < EPS) return false;
 
