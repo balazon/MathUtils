@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-#define EPS (0.001)
+
 
 
 ResultType GetResultType(TestType testType)
